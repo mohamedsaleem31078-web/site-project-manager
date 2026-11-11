@@ -1,14 +1,12 @@
 namespace SiteProjectManager.Models;
 
-public class Attachment
+public sealed class Report
 {
     public int Id { get; set; }
-    public int SnagId { get; set; }
-    public string FileName { get; set; } = string.Empty;
-    public string FilePath { get; set; } = string.Empty;
-    public string FileType { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
-    public DateTime UploadedAt { get; set; } = DateTime.UtcNow;
-
-    public Snag? Snag { get; set; }
+    public int ProjectId { get; set; }
+    public string Type { get; set; } = "Summary";
+    public string Title { get; set; } = "";
+    public string Content { get; set; } = "";
+    public DateTime GeneratedAt { get; set; } = DateTime.UtcNow;
+    public Project? Project { get; set; }
 }

@@ -1,43 +1,8 @@
-# Product Requirements
-
-## Overview
-This application is intended to handle project site management with a focus on snag tracking, site observations, image-based issue marking, reporting, and client communication.
-
-## Core requirements
-
-### Project management
-- Create and edit projects
-- Maintain client and project address data
-- Track project status and dates
-
-### Snag tracking
-- Add site issues and observations
-- Categorize by quality, safety, schedule, or other
-- Record severity and assigned person
-- Track resolution status
-
-### Attachments
-- Upload images and PDF documents
-- Attach them to specific issues
-- Preserve metadata and file names
-
-### Reporting
-- Generate summaries by project and date
-- Export to PDF or print-friendly format
-
-### Client letters
-- Draft formal written communication
-- Use templates for repeated operations
-- Save and re-use common letter formats
-
-### Stability
-- Use a local database
-- Ensure backup and restore workflows are available
-- Maintain reliable persistence for project data
-
-## Planned implementation
-
-- API-first app for core functionality
-- Swagger support for testing
-- SQLite database for persistence
-- Future extension to desktop after initial stability is proven
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo
+*.db
+*.db-shm
+*.db-wal
