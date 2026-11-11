@@ -1,2 +1,12 @@
-# site-project-manager
-Desktop and web app for managing construction site snags, reports, letters, and project schedules
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=siteprojectmanager.db"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
