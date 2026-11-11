@@ -1,9 +1,124 @@
 <!doctype html>
-<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>مِعمار | إدارة المشروع والموقع</title><link rel="stylesheet" href="/app.css"><script src="/app.js" defer></script></head>
-<body><aside class="sidebar"><div class="brand"><span class="brand-icon">م</span><div><b>مِعمار</b><small>إدارة المشروع والموقع</small></div></div><nav><a class="active" href="#dashboard">▦　لوحة التحكم</a><a href="#projects">▤　المشاريع</a><a href="#snags">☷　ملاحظات الموقع</a><a href="#reports">▧　التقارير</a></nav><div class="local"><i></i><div><b>تخزين محلي</b><small>البيانات على هذا الجهاز</small></div></div></aside>
-<main id="dashboard"><header><div><small>مساحة العمل</small><h1>لوحة التحكم</h1></div><button class="primary" id="add-project">＋ مشروع جديد</button></header><section class="welcome"><small>نظرة عامة</small><h2>أهلًا بك في مساحة مشروعك</h2><p>تابع المشاريع وملاحظات الموقع من مكان واحد.</p></section>
-<section class="stats"><article><small>إجمالي المشاريع</small><b id="project-count">0</b></article><article><small>ملاحظات مفتوحة</small><b id="open-count">0</b></article><article><small>قيد التنفيذ</small><b id="progress-count">0</b></article><article><small>ملاحظات مغلقة</small><b id="closed-count">0</b></article></section>
-<section class="grid"><article class="panel" id="projects"><div class="panel-title"><h2>المشاريع</h2><button class="link" id="add-project-2">＋ إضافة مشروع</button></div><div class="table-scroll"><table><thead><tr><th>اسم المشروع</th><th>المالك</th><th>الموقع</th><th>ملاحظات مفتوحة</th></tr></thead><tbody id="projects-body"><tr><td colspan="4">جارٍ التحميل…</td></tr></tbody></table></div></article>
-<article class="panel" id="snags"><div class="panel-title"><h2>أحدث الملاحظات</h2><button class="link" id="add-snag">＋ ملاحظة جديدة</button></div><div id="snags-list">جارٍ التحميل…</div></article></section><footer>مِعمار · نموذج أولي يعمل محليًا</footer></main>
-<dialog id="project-dialog"><form id="project-form"><button type="button" class="close" aria-label="إغلاق">×</button><h2>إضافة مشروع</h2><label>اسم المشروع *<input name="name" required maxlength="200"></label><label>اسم المالك<input name="clientName" maxlength="200"></label><label>اسم الموقع<input name="siteName" maxlength="200"></label><label>العنوان<input name="address" maxlength="400"></label><div class="row"><label>تاريخ البدء<input type="date" name="startDate"></label><label>تاريخ الانتهاء<input type="date" name="endDate"></label></div><label>ملاحظات<textarea name="notes" rows="3"></textarea></label><p class="error" id="project-error"></p><button class="primary" type="submit">حفظ المشروع</button></form></dialog>
-<dialog id="snag-dialog"><form id="snag-form"><button type="button" class="close" aria-label="إغلاق">×</button><h2>تسجيل ملاحظة موقع</h2><label>المشروع *<select name="projectId" id="project-select" required></select></label><label>عنوان الملاحظة *<input name="title" required maxlength="250"></label><label>التفاصيل<textarea name="description" rows="3"></textarea></label><div class="row"><label>التصنيف<select name="category"><option>جودة</option><option>سلامة</option><option>جدول زمني</option><option>أعمال تسليم</option><option>عام</option></select></label><label>الأولوية<select name="priority"><option value="Low">منخفضة</option><option value="Medium" selected>متوسطة</option><option value="High">عالية</option><option value="Critical">حرجة</option></select></label></div><label>الموقع داخل المشروع<input name="locationDescription" placeholder="المبنى / الطابق / الغرفة"></label><label>المسؤول<input name="assignedTo"></label><p class="error" id="snag-error"></p><button class="primary" type="submit">حفظ الملاحظة</button></form></dialog><div id="toast" role="status"></div></body></html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>مِعمار | إدارة المشروع والموقع</title>
+  <link rel="stylesheet" href="/app.css" />
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-icon">م</span>
+      <div><b>مِعمار</b><small>إدارة المشروع والموقع</small></div>
+    </div>
+    <nav>
+      <a class="active" href="#dashboard">▦ لوحة التحكم</a>
+      <a href="#projects">▤ المشاريع</a>
+      <a href="#snags">☷ ملاحظات الموقع</a>
+      <a href="#reports">▧ التقارير</a>
+      <a href="#letters">✉ الخطابات</a>
+    </nav>
+    <div class="local"><i></i><div><b>تخزين محلي</b><small>البيانات على هذا الجهاز</small></div></div>
+  </aside>
+
+  <main id="dashboard">
+    <header>
+      <div><small>مساحة العمل</small><h1>لوحة التحكم</h1></div>
+      <button class="primary" id="add-project">＋ مشروع جديد</button>
+    </header>
+
+    <section class="welcome">
+      <small>نظرة عامة</small>
+      <h2>أهلًا بك في مساحة مشروعك</h2>
+      <p>تابع المشاريع وملاحظات الموقع من مكان واحد.</p>
+    </section>
+
+    <section class="stats">
+      <article><small>إجمالي المشاريع</small><b id="project-count">0</b></article>
+      <article><small>ملاحظات مفتوحة</small><b id="open-count">0</b></article>
+      <article><small>قيد التنفيذ</small><b id="progress-count">0</b></article>
+      <article><small>ملاحظات مغلقة</small><b id="closed-count">0</b></article>
+    </section>
+
+    <section class="grid">
+      <article class="panel" id="projects">
+        <div class="panel-title"><h2>المشاريع</h2><button class="link" id="add-project-2">＋ إضافة مشروع</button></div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>اسم المشروع</th><th>المالك</th><th>الموقع</th><th>ملاحظات مفتوحة</th></tr></thead>
+            <tbody id="projects-body"><tr><td colspan="4">جارٍ التحميل…</td></tr></tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="panel" id="snags">
+        <div class="panel-title"><h2>أحدث الملاحظات</h2><button class="link" id="add-snag">＋ ملاحظة جديدة</button></div>
+        <div id="snags-list">جارٍ التحميل…</div>
+      </article>
+    </section>
+
+    <section class="lower-grid">
+      <article class="panel" id="reports">
+        <div class="panel-title"><h2>التقارير</h2><button class="link" id="report-add">＋ تقرير جديد</button></div>
+        <form id="report-form" class="mini-form">
+          <div class="row">
+            <label>المشروع<select id="report-project" name="projectId" required></select></label>
+            <label>نوع التقرير<select name="type"><option value="Summary">ملخص</option><option value="Progress">تقدم</option><option value="Issue">ملاحظات</option></select></label>
+          </div>
+          <label>عنوان التقرير<input name="title" value="تقرير يومي" maxlength="200" /></label>
+          <label>محتوى التقرير<textarea name="content" rows="4" placeholder="اكتب ملخص التقرير، أو قائمة الملاحظات، أو حالة الاستلام..."></textarea></label>
+          <button class="primary" type="submit">حفظ التقرير</button>
+        </form>
+        <div id="reports-list" class="list-box"></div>
+      </article>
+
+      <article class="panel" id="letters">
+        <div class="panel-title"><h2>الخطابات</h2><button class="link" id="letter-add">＋ خطاب جديد</button></div>
+        <form id="letter-form" class="mini-form">
+          <label>المشروع<select id="letter-project" name="projectId" required></select></label>
+          <label>عنوان الخطاب<input name="subject" value="خطاب متابعة" maxlength="200" /></label>
+          <label>نص الخطاب<textarea name="body" rows="5" placeholder="اكتب نص الخطاب الرسمي للمالك..."></textarea></label>
+          <button class="primary" type="submit">حفظ الخطاب</button>
+        </form>
+        <div id="letters-list" class="list-box"></div>
+      </article>
+    </section>
+
+    <footer>مِعمار · نموذج أولي يعمل محليًا</footer>
+  </main>
+
+  <dialog id="project-dialog">
+    <form id="project-form">
+      <button type="button" class="close" aria-label="إغلاق">×</button>
+      <h2>إضافة مشروع</h2>
+      <label>اسم المشروع *<input name="name" required maxlength="200" /></label>
+      <label>اسم المالك<input name="clientName" maxlength="200" /></label>
+      <label>اسم الموقع<input name="siteName" maxlength="200" /></label>
+      <label>العنوان<input name="address" maxlength="400" /></label>
+      <div class="row"><label>تاريخ البدء<input type="date" name="startDate" /></label><label>تاريخ الانتهاء<input type="date" name="endDate" /></label></div>
+      <label>ملاحظات<textarea name="notes" rows="3"></textarea></label>
+      <p class="error" id="project-error"></p>
+      <button class="primary" type="submit">حفظ المشروع</button>
+    </form>
+  </dialog>
+
+  <dialog id="snag-dialog">
+    <form id="snag-form">
+      <button type="button" class="close" aria-label="إغلاق">×</button>
+      <h2>تسجيل ملاحظة موقع</h2>
+      <label>المشروع *<select name="projectId" id="project-select" required></select></label>
+      <label>عنوان الملاحظة *<input name="title" required maxlength="250" /></label>
+      <label>التفاصيل<textarea name="description" rows="3"></textarea></label>
+      <div class="row"><label>التصنيف<select name="category"><option>جودة</option><option>سلامة</option><option>جدول زمني</option><option>أعمال تسليم</option><option>عام</option></select></label><label>الأولوية<select name="priority"><option value="Low">منخفضة</option><option value="Medium" selected>متوسطة</option><option value="High">عالية</option><option value="Critical">حرجة</option></select></label></div>
+      <label>الموقع داخل المشروع<input name="locationDescription" placeholder="المبنى / الطابق / الغرفة" /></label>
+      <label>المسؤول<input name="assignedTo" /></label>
+      <p class="error" id="snag-error"></p>
+      <button class="primary" type="submit">حفظ الملاحظة</button>
+    </form>
+  </dialog>
+
+  <div id="toast" role="status"></div>
+</body>
+</html>
